@@ -1,20 +1,27 @@
-jQuery(document).ready(function ($) {
- 
-	// auto scrolling needed for mobiles
-	// Also reset game without reloading page!!
-  // $('html, body').animate({
-    // scrollTop: $('#game').offset().top
-  // });
-		
+jQuery(document).ready(function (jQuery) {
+
 	//saving dom objects to variables
-	var container = $('#container');
-	var bird = $('#bird');
-	var pole = $('.pole');
-	var pole_1 = $('#pole_1');
-	var pole_2 = $('#pole_2');
-	var score = $('#score');
-	var speed_span = $('#speed');
-	var restart_btn = $('#restart_btn');
+	container = jQuery('#container');
+	bird = jQuery('#bird');
+	pole = jQuery('.pole');
+	pole_1 = jQuery('#pole_1');
+	pole_2 = jQuery('#pole_2');
+	score = jQuery('#score');
+	speed_span = jQuery('#speed');
+	restart_btn = jQuery('#restart_btn');
+
+	// auto scrolling needed for mobiles
+	// if (typeof(bird[0].ontouchend) == "function") {
+		// jQuery('html, body').animate({
+			// scrollTop : jQuery('#game').offset().top
+		// });
+	// }
+
+	// start game
+	start();
+});
+
+function start() {
 
 	//saving some initial setup
 	var container_width = parseInt(container.width());
@@ -75,19 +82,33 @@ jQuery(document).ready(function ($) {
 
 		}, 40);
 
-	$(document).on('keydown', function (e) {
+	// key press
+	jQuery(document).on('keydown', function (e) {
 		var key = e.keyCode;
 		if (key === 70 && go_up === false && game_over === false) {
 			go_up = setInterval(up, 50);
 		}
 	});
-
-	$(document).on('keyup', function (e) {
+	// key release
+	jQuery(document).on('keyup', function (e) {
 		var key = e.keyCode;
 		if (key === 70) {
 			clearInterval(go_up);
 			go_up = false;
 		}
+	});
+
+	// mousedown
+	jQuery('#container').on('mousedown touchstart', function (e) {
+		if (go_up === false && game_over === false) {
+			go_up = setInterval(up, 50);
+		}
+	});
+
+	// mouseup
+	jQuery('#container').on('mouseup touchend', function (e) {
+		clearInterval(go_up);
+		go_up = false;
 	});
 
 	function go_down() {
@@ -97,22 +118,6 @@ jQuery(document).ready(function ($) {
 	function up() {
 		bird.css('top', parseInt(bird.css('top')) - 10);
 	}
-
-	// supposedy for touch screens
-	// $(document).on('taphold', function (e) {
-		// var taphold = e.type;
-		// if (taphold && go_up === false) {
-			// go_up = setInterval(up, 20);
-		// }
-	// });
-
-	// $(document).on('tap', function (e) {
-		// var tap = e.type;
-		// if (tap) {
-			// clearInterval(go_up)
-			// go_up = false;
-		// }
-	// });
 
 	function stop_the_game() {
 		clearInterval(the_game);
@@ -124,17 +129,17 @@ jQuery(document).ready(function ($) {
 		location.reload();
 	});
 
-	function collision($div1, $div2) {
-		var x1 = $div1.offset().left;
-		var y1 = $div1.offset().top;
-		var h1 = $div1.outerHeight(true);
-		var w1 = $div1.outerWidth(true);
+	function collision(jQuerydiv1, jQuerydiv2) {
+		var x1 = jQuerydiv1.offset().left;
+		var y1 = jQuerydiv1.offset().top;
+		var h1 = jQuerydiv1.outerHeight(true);
+		var w1 = jQuerydiv1.outerWidth(true);
 		var b1 = y1 + h1;
 		var r1 = x1 + w1;
-		var x2 = $div2.offset().left;
-		var y2 = $div2.offset().top;
-		var h2 = $div2.outerHeight(true);
-		var w2 = $div2.outerWidth(true);
+		var x2 = jQuerydiv2.offset().left;
+		var y2 = jQuerydiv2.offset().top;
+		var h2 = jQuerydiv2.outerHeight(true);
+		var w2 = jQuerydiv2.outerWidth(true);
 		var b2 = y2 + h2;
 		var r2 = x2 + w2;
 
@@ -143,4 +148,4 @@ jQuery(document).ready(function ($) {
 		return true;
 	}
 
-});
+}

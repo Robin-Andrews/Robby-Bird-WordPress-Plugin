@@ -2,7 +2,7 @@
 
 /* Plugin Name: Robby Bird
  * Version: 1.0
- * Plugin URI: github - url to be confirmed.
+ * Plugin URI: https://github.com/Robin-Andrews/Robby-Bird-WordPress-Plugin
  * Description: A WordPress plugin that creates a post containing an HTML5 version of "Flappy Bird" using JQuery. Deletes post on deactivation.
  * Author: Robin Andrews
  * Author URI: http://balanceit.one/
@@ -14,10 +14,11 @@ function ra_add_post()
     
     
     if ($prev_post->post_status == false || $prev_post->post_status == 'trash') {    
-        $html = '				
-				<div id="game">
+        $html = '<div id="game">
 				
-					<p id="instructions">Press \'f\' to make the bird fly. Avoid poles and bounderies. Enjoy!</p>
+					<p>This post is generated entirely from a plugin. Visit <a href="https://github.com/Robin-Andrews/Robby-Bird-WordPress-Plugin">Github</a> for the source code.</p>
+				
+					<p id="instructions">Press \'f\' or click/tap on the game to make the bird fly. Avoid poles and bounderies. Enjoy!</p>
 					
 					<div id="container">
 
@@ -41,6 +42,7 @@ function ra_add_post()
             'post_title' => 'Robby Bird',
             'post_content' => $html,
             'post_status' => 'publish'
+						// in future maybe add SEO meta
         );
         
         wp_insert_post($new_post);
