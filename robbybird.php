@@ -12,21 +12,23 @@ function ra_add_post()
 {
 	$prev_post = get_page_by_title('Robby Bird', 'OBJECT', 'post');
 		
-	if ($prev_post->post_status == false || $prev_post->post_status == 'trash'):?>    
-		<div id="game">
-			<p>This post is generated entirely from a plugin. Visit <a href="https://github.com/Robin-Andrews/Robby-Bird-WordPress-Plugin">Github</a> for the source code.</p>
-			<p id="instructions">Press \'f\' or click/tap on the game to make the bird fly. Avoid poles and bounderies. Enjoy!</p>
-			<div id="container">
-				<div id="bird"></div>
-				<div class="pole" id="pole_1"></div>
-				<div class="pole" id="pole_2"></div>
-			</div>
-			<div id="score_div">
-				<p><b>Score:</b> <span id="score">0</span></p>
-				<p><b>Speed:</b> <span id="speed">10</span></p>
-			</div><button id="restart_btn">Restart</button>
-		</div><!-- game -->				
-	<?php endif;
+	if ($prev_post->post_status == false || $prev_post->post_status == 'trash'):
+		$html = <<<_HERE
+<div id="game">
+	<p>This post is generated entirely from a plugin. Visit <a href="https://github.com/Robin-Andrews/Robby-Bird-WordPress-Plugin">Github</a> for the source code.</p>
+	<p id="instructions">Press \'f\' or click/tap on the game to make the bird fly. Avoid poles and bounderies. Enjoy!</p>
+	<div id="container">
+		<div id="bird"></div>
+		<div class="pole" id="pole_1"></div>
+		<div class="pole" id="pole_2"></div>
+	</div>
+	<div id="score_div">
+		<p><b>Score:</b> <span id="score">0</span></p>
+		<p><b>Speed:</b> <span id="speed">10</span></p>
+	</div><button id="restart_btn">Restart</button>
+</div><!-- game -->
+_HERE;
+	endif;
 		
 	$new_post = array(
 		'post_title' => 'Robby Bird',
@@ -34,9 +36,7 @@ function ra_add_post()
 		'post_status' => 'publish'
 		// in future maybe add SEO meta
 	);
-		
 	wp_insert_post($new_post);
-	}
 }
 
 register_activation_hook(__FILE__, ra_add_post);
